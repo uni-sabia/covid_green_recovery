@@ -6,10 +6,11 @@ library(gt)
 library(janitor)
 library(naniar)
 
-# IMF Global economic data (WEO, 2020)
+# 1. Change in GDP by income group
+## IMF Global economic data (WEO, 2020) https://www.imf.org/en/Publications/WEO/weo-database/2020/October
 imf_raw <- read.csv("WEOOct2020.csv", sep=";", stringsAsFactors = FALSE)
 
-# Pivot for data processing, select variables of interest
+## Pivot for data processing, select variables of interest
 imf <- imf_raw %>% pivot_longer(cols=(starts_with("X")),
                                 names_to="year",
                                 values_to="value",
@@ -20,72 +21,78 @@ imf <- imf_raw %>% pivot_longer(cols=(starts_with("X")),
 imf$value[imf$value=="n/a"] <- NA
 
 
-# Only look at variables from 2005-2022 years
+## Only look at variables related to GDP and from 2005-2022 years
 x <- 2005:2022
 imf <- imf %>% filter(year %in% x)
 
-# GDP
 gdp <- imf %>% filter(variable %in% c("Gross domestic product, current prices",
                                       "Gross domestic product per capita, current prices"),
                       units == "U.S. dollars") %>% select(-scale, -units) %>% 
   pivot_wider(names_from=variable, values_from=value) %>% as.data.frame 
 
-# Country names by income group
-all_groups <- read.csv('CLASS.csv', sep=";") %>% clean_names()
-income <- all_groups %>% filter(group_name %in% c("High income", "Upper middle income", "Lower middle income", "Low income")) %>% 
-  select(-group_code) %>% rename(iso=country_code)
+## Sort Country names by income group
+### Country names by income group 
+all_groups <- read.csv('CLASS.csv') %>% clean_names() %>% select(economy, code, region, income_group)
+income <- all_groups %>% filter(income_group %in% c("High income", "Upper middle income", "Lower middle income", "Low income")) %>% 
+  rename(iso=code, country=economy)
 
-# Join gdp and income group
+### Join gdp and income group
 gdp <- left_join(income, gdp, by="iso") %>% 
   clean_names()
 gdp$gross_domestic_product_current_prices <- as.numeric(gdp$gross_domestic_product_per_capita_current_prices)
 
-# calculate gdp growth rate by income group
-gdp_income <- gdp %>% group_by(year, group_name) %>% 
+## Calculate gdp growth rate by income group
+gdp_income <- gdp %>% group_by(year, income_group) %>% 
   summarise(ave_gdp = ave(na.omit(gross_domestic_product_current_prices))) %>% 
   distinct() %>% 
-  group_by(group_name) %>%  
+  group_by(income_group) %>%  
   mutate(year= as.numeric(year)) %>% 
   mutate(diff_year = year - lag(year),
          diff_growth = ave_gdp - lag(ave_gdp),
          grt = (diff_growth/diff_year)/ ave_gdp*100) %>% as.data.frame()
+## Graph gdp growth rate by income group
+ggplot(gdp_income, aes(x=year, y=grt, group=income_group)) + 
+  geom_line(aes(colour=income_group)) +
+  ylim(-10, 30) # Graph or the calculation method need improvement
 
-ggplot(gdp_income, aes(x=year, y=grt, group=group_name)) + 
-  geom_line(aes(colour=group_name)) +
-  ylim(-10, 30)
+## Graph average GDP by income group
+ggplot(gdp_income, aes(x=year, y=ave_gdp, group=income_group)) + 
+  geom_line(aes(colour=income_group))
 
-ggplot(gdp_income, aes(x=year, y=ave_gdp, group=group_name)) + 
-  geom_line(aes(colour=group_name))
-
+###################################
+# 2. Analysis of COVID-19 fiscal stimulus provided by governments
+## Data from IMF Fiscal Policy Database, Oct 2020  https://www.imf.org/en/Topics/imf-and-covid19/Fiscal-Policies-Database-in-Response-to-COVID-19
 raw <- read.csv("fiscal.csv")
-names(raw)
 clean <- na.omit(raw)
-nrow(clean)
 duplicated(clean)
 
-global <- clean %>% group_by(region, type) %>% 
+## Global stimulus by income group and type
+global <- clean %>% group_by(region) %>% 
   mutate(total_stimulus = spending+liquidity) %>% 
   summarise(global_expenditure = sum(spending),
             global_liquidity = sum(liquidity),
             total_stimulus = sum(total_stimulus)) 
 global_byregion <- as.data.frame(global)
-global_byregion$prc_gdp <- c(9.3, 6, 1.8)
 
 ggplot(global_byregion, aes(x=region)) + 
   geom_bar(aes(y=total_stimulus), stat="identity") +
-  geom_line(aes(y=prc_gdp, color=region)) +
   labs(x = "Region", y = "Total Stimulus (billion USD)")
 ggsave("covid19_stimulus_region.png", width = 6, height = 4)
 
+## Total global stimulus 
 global_sum <- global_byregion %>% 
   summarise(expenditure = sum(global_expenditure),
             liquidity = sum(global_liquidity)) %>% 
   mutate(total = expenditure + liquidity)
+global_sum
 
+### Graph: Covid-19 stimulus by region and type
+#### Prep data for graphing
 global_long <- global %>% pivot_longer(cols=global_expenditure:total_stimulus, names_to = "type", values_to= "amount") %>%
   as.data.frame()
 global_long_nototal <- global_long[which(global_long$type != "total_stimulus"),]
 
+#### Plot
 ggplot(global_long_nototal, aes(x=region, y=amount, fill=type)) +
   geom_bar(stat="identity") +
   labs(x="Country by Income", y="Amount(billion USD)") + 
@@ -94,9 +101,16 @@ ggplot(global_long_nototal, aes(x=region, y=amount, fill=type)) +
                       labels= c("Expenditure", "Liquidity")) +
   theme_classic()
 
+#### Save as png image
 ggsave("covid19_stimulus_region.png", width = 6, height = 4)
 
-green_raw <- read.csv("green.csv")
+#########################################
+# 3. Analyze green recovery efforts by country
+## Data from Carbon Brief (Coronavirus: Tracking how the world’s ‘green recovery’ plans aim to cut emissions)
+## https://www.carbonbrief.org/coronavirus-tracking-how-the-worlds-green-recovery-plans-aim-to-cut-emissions
+
+green_raw <- read.csv("green.csv") %>%
+  select(-X, -X.1) # Since the Carbon Brief's Tracker does not provide downloadable raw data, this file was created by the author's manual entry.
 green_country <- green_raw %>% group_by(country) %>% 
   summarise(green_stimulus = sum(amount)) %>% arrange(desc(green_stimulus))
 green_country
@@ -104,7 +118,12 @@ sum(green_country$green_stimulus)
 
 green_country <- as.data.frame(green_country)
 
+## Compare the share of green stimulus in global total COVID-19 stimulus, 
+## Join IMF Fiscal Policy Data (clean) with green recovery data (green_country)
+## Match income group data with the full dataset
+clean <- clean %>% select(-region)
 all <- left_join(clean, green_country, by="country")
+all <- left_join(all, income, by="country")
 all$green_stimulus[is.na(all$green_stimulus)] <- 0
 all_global <- all %>% 
   mutate(total_stimulus = spending+liquidity) %>% 
@@ -115,14 +134,7 @@ all_global <- all %>%
   mutate(green_perc = round(global_green/total_stimulus*100,2))
 all_global
 
-all_global <- all %>% 
-  mutate(total_stimulus = spending+liquidity) %>% 
-  summarise(global_expenditure = sum(spending),
-            global_liquidity = sum(liquidity),
-            global_green = sum(green_stimulus),
-            total_stimulus = sum(total_stimulus)) %>% 
-  mutate(green_perc = round(global_green/total_stimulus*100,2))
-
+## Percentage of green recovery stimulus in total stimulus by region
 all_region <- all %>% 
   group_by(region) %>% 
   mutate(total_stimulus = spending+liquidity) %>% 
@@ -133,13 +145,16 @@ all_region <- all %>%
   mutate(stimulus=total_stimulus - global_green,
          green_prc=global_green/total_stimulus*100) %>% 
   select(region, stimulus, global_green, green_prc) %>% as.data.frame() 
+all_region
 
+## Create a table that summarizes global stimulus and share of green recovery
 total <- all_region %>% 
   summarise(stimulus=sum(stimulus),
             global_green = sum(global_green)) %>% 
   mutate(green_prc = global_green/stimulus*100) %>% 
   as.data.frame()
-world <- c("World", 12803.39, 205.48, 1.604887)
+
+world <- c("World", 12803, 205, 1.6) ## Need to find a better way to add the world summary to gtable
 
 summary <- rbind(all_region, world) %>% 
   mutate(stimulus = as.numeric(stimulus),
@@ -156,9 +171,10 @@ table <- summary %>% gt() %>%
     stimulus = "General Stimulus",
     global_green = "Green Stimulus",
     green_prc = "% of Green") 
-table %>% gtsave("stimulus_table.png")
+table %>% gtsave("stimulus_table.png") 
 
-green_country_sector <- green_raw %>% select(-X, -X.1) %>% 
+## Green stimulus by country and sector
+green_country_sector <- green_raw %>%
   group_by(country, sector) %>% summarise(amount=sum(amount))
 
 country_sector <- ggplot(green_country_sector, aes(y=reorder(country, amount), x=amount, fill=sector)) + 
@@ -173,7 +189,8 @@ country_sector <- ggplot(green_country_sector, aes(y=reorder(country, amount), x
 country_sector
 ggsave("green_country_sector.png")
 
-green_sector <- green_raw %>% select(-X, -X.1) %>% 
+## Green stimulus by sector
+green_sector <- green_raw %>% 
   group_by(sector) %>% summarise(amount=sum(amount)) %>% 
   as.data.frame()
 
@@ -185,6 +202,27 @@ green_bysector <- ggplot(green_sector, aes(x="", y=amount, fill=sector, label=se
   labs(title="Sector breakdown of green stimulus") +
   theme_void() 
 green_bysector 
+
+## Green stimulus by income group
+### Add income group data to the green dataset
+green <- left_join(green_raw, income, by="country") 
+
+### A table that summarizes breakdown of global green recovery effort by income group
+green_income_data <- green %>% group_by(income_group) %>%
+  summarize(amount=sum(amount)) %>%
+  mutate(share=round(amount/sum(amount)*100,2)) %>% 
+  arrange(desc(amount)) %>%
+  as.data.frame()
+
+table <- green_income_data %>% gt() %>% 
+  tab_header(title = "COVID-19 Recovery Stimulus by Income Group",
+             subtitle = "in billion USD") %>% 
+  cols_label(
+    income_group = "Income group",
+    amount = "Green recovery stimulus (in USD mil)",
+    share = "% of income group")
+table %>% gtsave("stimulus_incomegroup.png")
+
 
 ## INTERNATIONAL FINANCIAL INSTITUTIONS
 

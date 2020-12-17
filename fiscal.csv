@@ -1,0 +1,192 @@
+g20,region,country,spending,liquidity
+T,Advanced Economies,Australia,156.5352333,24.09293388
+T,Advanced Economies,Canada,199.624925,68.05057854
+T,Advanced Economies,European Union,489.101604,874.5184692
+T,Advanced Economies,France,133.5212513,401.8212313
+T,Advanced Economies,Germany,315.5125458,1166.024626
+T,Advanced Economies,Italy,91.45291182,609.5908153
+T,Advanced Economies,Japan,555.0878414,1163.352165
+T,Advanced Economies,South Korea,55.3704579,163.6059231
+T,Advanced Economies,Spain,43.55444925,176.7327521
+T,Advanced Economies,United Kingdom,241.4414267,437.0038562
+T,Advanced Economies,United States,2449,510
+T,EMDE,Argentina,15.00856738,8.115270761
+T,EMDE,Brazil,112.8579212,86.39960894
+T,EMDE,China,706.6668113,197.5340183
+T,EMDE,India,46.39148435,135.1265086
+T,EMDE,Indonesia,29.03308541,12.663076
+T,EMDE,Mexico,6.745500154,4.716812735
+T,EMDE,Russia,34.95826062,14.96812279
+T,EMDE,Saudi Arabia,15.36,5.866666667
+T,EMDE,South Africa,14.97076023,11.87134503
+T,EMDE,Turkey,4.903469429,84.41488963
+F,Advanced Economies,Austria,36.58116473,10.28845258
+F,Advanced Economies,Belgium,19.89100832,60.70187022
+F,Advanced Economies,Cyprus,1.028845258,1.0631401
+F,Advanced Economies,Czech republic,10.573339,37.38663195
+F,Advanced Economies,Denmark,20.04441143,30.69205159
+F,Advanced Economies,Estonia,1.074571714,1.326067221
+F,Advanced Economies,Finland,6.858968386,18.65639401
+F,Advanced Economies,Greece,13.26067221,2.972219634
+F,Advanced Economies,Hong Kong,37.00843149,2.574499582
+F,Advanced Economies,Iceland,0.882538204,0.91931063
+F,Advanced Economies,Ireland,23.43480865,6.858968386
+F,Advanced Economies,Israel,25.91830638,11.15325113
+F,Advanced Economies,Latvia,2.641211835,1.048561098
+F,Advanced Economies,Lithuania,2.594976373,1.966237604
+F,Advanced Economies,Luxembourg,3.543800333,4.115381032
+F,Advanced Economies,Macao SAR,6.590216189,
+F,Advanced Economies,Malta,0.720191681,0.89166589
+F,Advanced Economies,The Netherlands,40.69654576,37.72432612
+F,Advanced Economies,New Zealand,37.64791065,7.947892247
+F,Advanced Economies,Norway,17.25054151,19.12467442
+F,Advanced Economies,Portugal,7.201916805,14.86109817
+F,Advanced Economies,San Marino,,
+F,Advanced Economies,Singapore,54.27116921,15.87720376
+F,Advanced Economies,Slovak Republic,2.514955075,4.584077205
+F,Advanced Economies,Slovenia,4.115381032,3.429484193
+F,Advanced Economies,Sweden,27.74467105,28.47364868
+F,Advanced Economies,Switzerland,33.75584461,45.21253554
+F,EMDE,Albania,0.169825713,0.232393081
+F,EMDE,Algeria,0.564489521,
+F,EMDE,Angola,0.303386561,
+F,EMDE,Anguilla,,
+F,EMDE,Antigua and Barbuda,0.074074074,
+F,EMDE,Armenia,0.197635647,0.184500354
+F,EMDE,Aruba,0.229050279,
+F,EMDE,Azerbaijan,1.941176471,0.964705882
+F,EMDE,"Bahamas, The",0.23,0.08
+F,EMDE,Bahrain,1.968085106,0.265957447
+F,EMDE,Barbados,0.085,0.14
+F,EMDE,Belarus,,
+F,EMDE,Belize,0.01,0.055
+F,EMDE,Bolivia,2.026239067,4.139941691
+F,EMDE,Bosnia and Herzegovina,0.979386043,
+F,EMDE,Botswana,0.177764123,
+F,EMDE,Brunei Darussalam,0.144338216,
+F,EMDE,Bulgaria,1.814838784,2.70595093
+F,EMDE,Cabo Verde,0.029995366,0.030503762
+F,EMDE,Chile,20.58669225,5.614552431
+F,EMDE,Colombia,7.050211803,6.914125586
+F,EMDE,Costa Rica,0.851626384,
+F,EMDE,Croatia,2.929704875,
+F,EMDE,Dominica,0.014814815,
+F,EMDE,Dominican Republic,1.581758874,
+F,EMDE,Ecuador,,
+F,EMDE,Egypt,5.695787783,0.462566706
+F,EMDE,El Salvador,0.92,
+F,EMDE,Equatorial Guinea,0.174273832,0.001742738
+F,EMDE,Eswatini,0.109142857,
+F,EMDE,Fiji,0.224555203,
+F,EMDE,Gabon,0.297572803,0.021365078
+F,EMDE,Georgia,0.673722462,2.43814E-05
+F,EMDE,Grenada,0.025925928,
+F,EMDE,Guatemala,2.559654175,
+F,EMDE,Guyana,,
+F,EMDE,Hungary,6.189164032,6.627022595
+F,EMDE,Iran,30.68215132,
+F,EMDE,Iraq,0.333333333,
+F,EMDE,Jamaica,0.126877127,
+F,EMDE,Jordan,0.2256704,0.70522
+F,EMDE,Kazakhstan,3.411610849,4.630043295
+F,EMDE,Kosovo,0.41725391,0.21262802
+F,EMDE,Kuwait,1.656177542,
+F,EMDE,Lebanon,,
+F,EMDE,Libya,0.36090252,
+F,EMDE,Malaysia,14.85118601,11.93825242
+F,EMDE,Maldives,0.282284231,
+F,EMDE,Mauritius,0.205587112,3.686393991
+F,EMDE,"Micronesia, Fed. States of",0.07,
+F,EMDE,Mongolia,1.015796853,0.314519462
+F,EMDE,"Montenegro, Rep. of",0.396105424,
+F,EMDE,Montserrat,,
+F,EMDE,Morocco,3.158678689,
+F,EMDE,Namibia,0.116959064,0.128654971
+F,EMDE,Nauru,0.00671179,0.00671179
+F,EMDE,North Macedonia,0.252774917,0.184005271
+F,EMDE,Oman,,
+F,EMDE,Pakistan,5.214837556,
+F,EMDE,Palau,0.02,
+F,EMDE,Panama,1.8,
+F,EMDE,Paraguay,0.9202706,
+F,EMDE,Peru,12.85100336,17.92114695
+F,EMDE,Philippines,8.47188755,3.891566265
+F,EMDE,Poland,38.7205783,29.09786372
+F,EMDE,Qatar,0.3,
+F,EMDE,Romania,5.397561511,7.977974689
+F,EMDE,Samoa,0.057149321,0.022859728
+F,EMDE,Serbia,2.92444618,0.726364068
+F,EMDE,Seychelles,0.069942197,
+F,EMDE,Sri Lanka,0.6,
+F,EMDE,St. Kitts and Nevis,0.044444444,
+F,EMDE,St. Lucia,0.06148,
+F,EMDE,St. Vincent and the Grenadines,0.02962963,
+F,EMDE,Thailand,41.72722111,21.72952391
+F,EMDE,Tonga,0.026477055,
+F,EMDE,Trinidad and Tobago,0.56260234,
+F,EMDE,Tunisia,0.720810203,0.176582607
+F,EMDE,Turkmenistan,0.011428571,0.011428571
+F,EMDE,Tuvalu,0.013127929,
+F,EMDE,Ukraine,4.80452147,
+F,EMDE,United Arab Emirates,7.351940095,
+F,EMDE,Uruguay,0.450330742,
+F,EMDE,Vanuatu,0.038133206,
+F,Low-income,Afghanistan,0.553550492,
+F,Low-income,Bangladesh,3.378575202,
+F,Low-income,Benin,0.261410747,
+F,Low-income,Bhutan,,
+F,Low-income,Burkina Faso,0.686638897,
+F,Low-income,Burundi,0.081057183,
+F,Low-income,Cambodia,0.058408717,
+F,Low-income,Cameroon,0.348547663,
+F,Low-income,Central African Republic,0.027005458,
+F,Low-income,Chad,0.594803765,0.188012684
+F,Low-income,Comoros,0.034184124,
+F,Low-income,"Congo, Rep.",0.23074284,0.042730156
+F,Low-income,Cote d'Ivoire,1.131037167,
+F,Low-income,"Congo, Dem. Rep.",0.495938264,
+F,Low-income,Djibouti,0.082713917,
+F,Low-income,Eritrea,,
+F,Low-income,Ethiopia,1.457609766,0.600192257
+F,Low-income,"Gambia, The",0.009589825,
+F,Low-income,Ghana,1.941577542,0.208026165
+F,Low-income,Guinea,0.202784892,0.007147504
+F,Low-income,Guinea-Bissau,0.022219681,0.025638093
+F,Low-income,Haiti,0.13135211,
+F,Low-income,Honduras,0.544915884,0.499840121
+F,Low-income,Kenya,2.368945337,
+F,Low-income,Kiribati,0.020651086,
+F,Low-income,Kyrgyz Republic,0.148510925,
+F,Low-income,Lao P.D.R.,0.00316651,
+F,Low-income,Lesotho,0.194296191,0.024287024
+F,Low-income,Liberia,0.003,
+F,Low-income,Madagascar,0.22005753,
+F,Low-income,Malawi,0.019960268,
+F,Low-income,Mali,0.871369158,0.034854766
+F,Low-income,Mauritania,0.432932521,
+F,Low-income,Moldova,0.252055439,0.043835728
+F,Low-income,Mozambique,0.70267512,
+F,Low-income,Myanmar,0.565081054,0.62227771
+F,Low-income,Nepal,0.588870418,0.440562313
+F,Low-income,Nicaragua,0.165086484,
+F,Low-income,Niger,0.097444582,0.166600413
+F,Low-income,Nigeria,6.562054208,
+F,Low-income,Papua New Guinea,0.183259954,
+F,Low-income,Rwanda,0.345714171,
+F,Low-income,S‹o TomŽ and Pr’ncipe,0.012598105,
+F,Low-income,Senegal,0.722190758,0.121991682
+F,Low-income,Sierra Leone,0.137867432,
+F,Low-income,Solomon Islands,0.00369,0.00123
+F,Low-income,Somalia,0.01,
+F,Low-income,South Sudan,0.007342196,
+F,Low-income,Sudan,0.345294255,
+F,Low-income,Tajikistan,0.267212214,0.03868436
+F,Low-income,Tanzania,0.020218476,
+F,Low-income,"Timor-Leste, Dem. Rep. of",0.15,
+F,Low-income,Togo,0.184594272,
+F,Low-income,Uganda,0.06552833,0.247836746
+F,Low-income,Uzbekistan,2.218160829,1.456292526
+F,Low-income,Vietnam,4.208296672,1.602143403
+F,Low-income,Yemen,,
+F,Low-income,Zambia,0.39701732,0.050326139
+F,Low-income,Zimbabwe,0.672328853,
