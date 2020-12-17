@@ -219,13 +219,13 @@ table <- green_income_data %>% gt() %>%
              subtitle = "in billion USD") %>% 
   cols_label(
     income_group = "Income group",
-    amount = "Green recovery stimulus (in USD mil)",
+    amount = "Green recovery stimulus",
     share = "% of income group")
 table %>% gtsave("stimulus_incomegroup.png")
 
 
-## INTERNATIONAL FINANCIAL INSTITUTIONS
-
+# 4. Overview of COVID-19 recovery stimulus provided by INTERNATIONAL FINANCIAL INSTITUTIONS
+## Data source: https://docs.google.com/spreadsheets/d/1V4kY7qSQlO_QNQOv4LiDKfpcxzoczCmvdx9gR3d7Rl8/edit#gid=0
 ifi <- read.csv("ifi_tracker.csv",  skip=3, stringsAsFactors=F)
 ifi <- ifi[,1:17]
 ifi <- ifi %>% rename(Commitment = Institutional.Commitment...M.,
