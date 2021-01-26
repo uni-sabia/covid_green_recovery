@@ -109,10 +109,10 @@ ggsave("covid19_stimulus_region.png", width = 6, height = 4)
 ## Data from Carbon Brief (Coronavirus: Tracking how the world’s ‘green recovery’ plans aim to cut emissions)
 ## https://www.carbonbrief.org/coronavirus-tracking-how-the-worlds-green-recovery-plans-aim-to-cut-emissions
 
-green_raw <- read.csv("green.csv") %>%
-  select(-X, -X.1) # Since the Carbon Brief's Tracker does not provide downloadable raw data, this file was created by the author's manual entry.
+green_raw <- read.csv("carbonbrief.csv", sep=";") 
+# Since the Carbon Brief's Tracker does not provide downloadable raw data, this file was created by the author's manual entry.
 green_country <- green_raw %>% group_by(country) %>% 
-  summarise(green_stimulus = sum(amount)) %>% arrange(desc(green_stimulus))
+  summarise(green_stimulus = sum(amount)) %>% arrange(desc(green_stimulus)) %>% na.omit()
 green_country
 sum(green_country$green_stimulus)
 
@@ -174,6 +174,22 @@ table <- summary %>% gt() %>%
 table %>% gtsave("stimulus_table.png") 
 
 ## Green stimulus by country and sector
+### Group countries into OECD and non-OECD countries
+
+oecd <- c("European Union","Australia", "Austria", "Belgium", "Canada", "Chile","Columbia","Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Israel", "Italy", "Japan", "South Korea", "Latvia", "Lithuania", "Luxembourg", "Mexico", "Netherlands", "New Zealand", "Norway", "Poland", "Portugal", "Slovak Republic", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", "United Kingdom", "United States")
+
+green_country <- green_raw %>% mutate(
+  oecd = ifelse(country %in% oecd, 1, 0)) %>%
+    na.omit()
+
+### Calculate the share of OECD countries' spending for green recovery 
+green_oecd <- green_country %>% group_by(oecd) %>% 
+  summarise(amount=sum(amount)) %>% 
+  mutate(share=amount/sum(amount)*100)
+
+
+# Make a graph by country and sector
+
 green_country_sector <- green_raw %>%
   group_by(country, sector) %>% summarise(amount=sum(amount))
 
@@ -183,11 +199,11 @@ country_sector <- ggplot(green_country_sector, aes(y=reorder(country, amount), x
   labs(x="Amount in billion USD",
       title = "Green Stimulus by Country and Sector",
       fill = "Sector") +
-  theme_classic() +
-  scale_fill_ordinal() +
-  theme(axis.title.y=element_blank())
+  theme_excel() +
+  theme(axis.title.y=element_blank()) +
+  scale_color_manual(values = c("#c72145","#f1b32c","#369444","#8dc359","#cceb34","#34c0eb","#8334eb","#343aeb")) 
 country_sector
-ggsave("green_country_sector.png")
+ggsave("green_country_sector.png", width=6, height=3.6)
 
 ## Green stimulus by sector
 green_sector <- green_raw %>% 
