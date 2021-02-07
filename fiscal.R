@@ -199,9 +199,9 @@ country_sector <- ggplot(green_country_sector, aes(y=reorder(country, amount), x
   labs(x="Amount in billion USD",
       title = "Green Stimulus by Country and Sector",
       fill = "Sector") +
-  theme_excel() +
+  theme_classic() +
   theme(axis.title.y=element_blank()) +
-  scale_color_manual(values = c("#c72145","#f1b32c","#369444","#8dc359","#cceb34","#34c0eb","#8334eb","#343aeb")) 
+  scale_fill_manual(values = c("#c72145","#f1b32c","#369444","#8dc359","#ebe534","#5c7300","#6d8a6f","#429ef5")) 
 country_sector
 ggsave("green_country_sector.png", width=6, height=3.6)
 
