@@ -1,6 +1,6 @@
 # Global Green Recovery Efforts after COVID-19
 
-This repository contains a script that analyses and visualises global green recovery efforts after COVID-19 at global and national levels. The result of the analysis has been published at LEDS GP website. 
+This repository contains a script that analyses and visualises global green recovery efforts after COVID-19 at global and national levels. The result of the analysis has been published at LEDS GP website : https://ledsgp.org/2021/03/green-recovery-for-all-how-developing-countries-can-build-forward-better/?loclang=en_gb 
 
 There are three datasets:
  1. WEOOct2020.csv
