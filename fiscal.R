@@ -32,7 +32,7 @@ gdp <- imf %>% filter(variable %in% c("Gross domestic product, current prices",
 
 ## Sort Country names by income group
 ### Country names by income group 
-all_groups <- read.csv('CLASS.csv') %>% clean_names() %>% select(economy, code, region, income_group)
+all_groups <- read.csv('data/CLASS.csv') %>% clean_names() %>% select(economy, code, region, income_group)
 income <- all_groups %>% filter(income_group %in% c("High income", "Upper middle income", "Lower middle income", "Low income")) %>% 
   rename(iso=code, country=economy)
 
@@ -50,6 +50,7 @@ gdp_income <- gdp %>% group_by(year, income_group) %>%
   mutate(diff_year = year - lag(year),
          diff_growth = ave_gdp - lag(ave_gdp),
          grt = (diff_growth/diff_year)/ ave_gdp*100) %>% as.data.frame()
+
 ## Graph gdp growth rate by income group
 ggplot(gdp_income, aes(x=year, y=grt, group=income_group)) + 
   geom_line(aes(colour=income_group)) +
@@ -62,7 +63,7 @@ ggplot(gdp_income, aes(x=year, y=ave_gdp, group=income_group)) +
 ###################################
 # 2. Analysis of COVID-19 fiscal stimulus provided by governments
 ## Data from IMF Fiscal Policy Database, Oct 2020  https://www.imf.org/en/Topics/imf-and-covid19/Fiscal-Policies-Database-in-Response-to-COVID-19
-raw <- read.csv("fiscal.csv")
+raw <- read.csv("data/fiscal.csv")
 clean <- na.omit(raw)
 duplicated(clean)
 
@@ -109,19 +110,20 @@ ggsave("covid19_stimulus_region.png", width = 6, height = 4)
 ## Data from Carbon Brief (Coronavirus: Tracking how the world’s ‘green recovery’ plans aim to cut emissions)
 ## https://www.carbonbrief.org/coronavirus-tracking-how-the-worlds-green-recovery-plans-aim-to-cut-emissions
 
-green_raw <- read.csv("carbonbrief.csv", sep=";") 
-# Since the Carbon Brief's Tracker does not provide downloadable raw data, this file was created by the author's manual entry.
-green_country <- green_raw %>% group_by(country) %>% 
-  summarise(green_stimulus = sum(amount)) %>% arrange(desc(green_stimulus)) %>% na.omit()
-green_country
-sum(green_country$green_stimulus)
+green_raw <- read.csv("data/carbonbrief.csv", sep=";") 
 
-green_country <- as.data.frame(green_country)
+green_country <- green_raw %>% group_by(country) %>% 
+  summarise(green_stimulus = sum(amount)) %>% 
+  arrange(desc(green_stimulus)) %>% na.omit() %>%
+  as.data.frame(green_country)
 
 ## Compare the share of green stimulus in global total COVID-19 stimulus, 
 ## Join IMF Fiscal Policy Data (clean) with green recovery data (green_country)
+### Data from IMF Fiscal Policy Database, Oct 2020  https://www.imf.org/en/Topics/imf-and-covid19/Fiscal-Policies-Database-in-Response-to-COVID-19
+raw <- read.csv("data/fiscal.csv")
+clean <- na.omit(raw) %>% select(-region)
+
 ## Match income group data with the full dataset
-clean <- clean %>% select(-region)
 all <- left_join(clean, green_country, by="country")
 all <- left_join(all, income, by="country")
 all$green_stimulus[is.na(all$green_stimulus)] <- 0
@@ -171,6 +173,8 @@ table <- summary %>% gt() %>%
     stimulus = "General Stimulus",
     global_green = "Green Stimulus",
     green_prc = "% of Green") 
+
+table
 table %>% gtsave("stimulus_table.png") 
 
 ## Green stimulus by country and sector
